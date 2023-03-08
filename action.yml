@@ -37,6 +37,7 @@ runs:
       run: |
         ls --directory .git/
         cat .git/refs/heads/main
+      shell: bash
       if: ${{ always() }}
     - name: Build PDF
       run: make pdf2x
@@ -67,12 +68,14 @@ runs:
         for f in build/*; do mv "$f" "$(python3 -m unidecode -c "$f")"; done
         rename --verbose --filename 's/\\//g' build/*
         rename --verbose --filename 's/\s/_/g' build/*
+      shell: bash
       if: ${{ always() }}
     - name: Generate release tag
       id: tag
       run: |
         echo "::set-output name=release_tag::build_$(date +'%d.%m.%Y_%H-%M' --utc)"
         echo "::set-output name=release_name::Build $(date +'%d.%m.%Y %H:%M' --utc) UTC"
+      shell: bash
       if: ${{ always() && inputs.upload_artifacts }}
     - name: Upload release assets
       uses: ncipollo/release-action@v1
