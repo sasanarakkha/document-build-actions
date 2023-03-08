@@ -1,5 +1,5 @@
 name: 'Build ebooks'
-description: ''
+description: 'Generic workflow for Sasanarakkha digital books'
 inputs:
   build_pdf:
     required: true
@@ -11,7 +11,6 @@ inputs:
     required: true
     default: true
   build_mobi:
-    description: ''
     required: true
     default: true
   validate_epub:
