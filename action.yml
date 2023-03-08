@@ -33,10 +33,12 @@ runs:
   steps:
     - name: Actions checkout
       uses: actions/checkout@v3
+      if: ${{ always() }}
     - name: Check ref
       run: |
         ls --directory .git/
         cat .git/refs/heads/main
+      if: ${{ always() }}
     - name: Build PDF
       run: make pdf2x
       shell: bash
@@ -66,11 +68,13 @@ runs:
         for f in build/*; do mv "$f" "$(python3 -m unidecode -c "$f")"; done
         rename --verbose --filename 's/\\//g' build/*
         rename --verbose --filename 's/\s/_/g' build/*
+      if: ${{ always() }}
     - name: Generate release tag
       id: tag
       run: |
         echo "::set-output name=release_tag::build_$(date +'%d.%m.%Y_%H-%M' --utc)"
         echo "::set-output name=release_name::Build $(date +'%d.%m.%Y %H:%M' --utc) UTC"
+      if: ${{ always() && inputs.upload_artifacts }}
     - name: Upload release assets
       uses: ncipollo/release-action@v1
       with:
@@ -80,3 +84,4 @@ runs:
         artifacts: "build/*"
         removeArtifacts: true
         artifactErrorsFailBuild: true
+      if: ${{ always() && inputs.upload_artifacts }}
