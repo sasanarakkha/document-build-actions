@@ -73,8 +73,8 @@ runs:
     - name: Generate release tag
       id: tag
       run: |
-        echo "::set-output name=release_tag::build_$(date +'%d.%m.%Y_%H-%M' --utc)"
-        echo "::set-output name=release_name::Build $(date +'%d.%m.%Y %H:%M' --utc) UTC"
+        echo "release_tag=build_$(date +'%d.%m.%Y_%H-%M' --utc)" >> $GITHUB_OUTPUT
+        echo "release_name=Build $(date +'%d.%m.%Y %H:%M' --utc) UTC" >> $GITHUB_OUTPUT
       shell: bash
       if: ${{ always() && inputs.upload_artifacts }}
     - name: Upload release assets
