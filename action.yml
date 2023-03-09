@@ -36,7 +36,7 @@ runs:
     - name: Check ref
       run: |
         ls --directory .git/
-        cat .git/refs/heads/main
+        cat ".git/${GITHUB_REF}"
       shell: bash
       if: ${{ always() }}
     - name: Build PDF
