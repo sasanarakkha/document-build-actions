@@ -12,6 +12,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container: bergentroll/pali-english-recitations-builder:latest
+    permissions:
+      contents: write  # For uploading artifacts
     steps:
       - uses: bergentroll/sasanarakkha-build-ebooks-action@v1
         with:
