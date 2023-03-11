@@ -1,6 +1,9 @@
 name: 'Build ebooks'
 description: 'Generic workflow for Sasanarakkha digital books'
 inputs:
+  verbose_latex:
+    required: true
+    default: false
   build_pdf:
     required: true
     default: true
@@ -30,6 +33,10 @@ outputs:
 runs:
   using: "composite"
   steps:
+    - name: Sets env vars for release
+      run: echo "VERBOSE_LATEX=true" >> $GITHUB_ENV
+      shell: bash
+      if: inputs.verbose_latex
     - name: Actions checkout
       uses: actions/checkout@v3
       if:  always() 
@@ -40,7 +47,12 @@ runs:
       shell: bash
       if:  always() 
     - name: Build PDF
-      run: make pdf2x
+      run: |
+        if [ -n "$VERBOSE_LATEX" ]; then
+          make pdf2x
+        else
+          make pdf2x > /dev/null
+        fi
       shell: bash
       if:  always() && inputs.build_pdf 
     - name: Build EPUB
@@ -58,7 +70,7 @@ runs:
     - name: Validate EPUB
       run: make validate
       shell: bash
-      if:  always() && Boolean(inputs.validate_epub)
+      if:  always() && FromJSON(inputs.validate_epub)
     - name: Optimize
       run: make optimize EPUB || true
       shell: bash
