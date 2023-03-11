@@ -32,51 +32,51 @@ runs:
   steps:
     - name: Actions checkout
       uses: actions/checkout@v3
-      if: ${{ always() }}
+      if:  always() 
     - name: Check ref
       run: |
         ls --directory .git/
         cat ".git/${GITHUB_REF}"
       shell: bash
-      if: ${{ always() }}
+      if:  always() 
     - name: Build PDF
       run: make pdf2x
       shell: bash
-      if: ${{ always() && inputs.build_pdf }}
+      if:  always() && inputs.build_pdf 
     - name: Build EPUB
       run: make epub
       shell: bash
-      if: ${{ always() && inputs.build_epub }}
+      if:  always() && inputs.build_epub 
     - name: Build Mobipocket
       run: make mobi
       shell: bash
-      if: ${{ always() && inputs.build_mobi }}
+      if:  always() && inputs.build_mobi 
     - name: Build AZW3
       run: make azw3
       shell: bash
-      if: ${{ always() && inputs.build_azw3 }}
+      if:  always() && inputs.build_azw3 
     - name: Validate EPUB
       run: make validate
       shell: bash
-      if: ${{ always() && inputs.validate_epub }}
+      if:  always() && Boolean(inputs.validate_epub)
     - name: Optimize
       run: make optimize EPUB || true
       shell: bash
-      if: ${{ always() && inputs.optimize_epub }}
+      if:  always() && inputs.optimize_epub 
     - name: Normalize filenames
       run: |
         for f in build/*; do mv "$f" "$(python3 -m unidecode -c "$f")"; done
         rename --verbose --filename 's/\\//g' build/*
         rename --verbose --filename 's/\s/_/g' build/*
       shell: bash
-      if: ${{ always() }}
+      if:  always() 
     - name: Generate release tag
       id: tag
       run: |
         echo "release_tag=build_$(date +'%d.%m.%Y_%H-%M' --utc)" >> $GITHUB_OUTPUT
         echo "release_name=Build $(date +'%d.%m.%Y %H:%M' --utc) UTC" >> $GITHUB_OUTPUT
       shell: bash
-      if: ${{ always() && inputs.upload_artifacts }}
+      if:  always() && inputs.upload_artifacts 
     - name: Upload release assets
       uses: ncipollo/release-action@v1
       with:
@@ -86,4 +86,4 @@ runs:
         artifacts: "build/*"
         removeArtifacts: true
         artifactErrorsFailBuild: true
-      if: ${{ always() && inputs.upload_artifacts }}
+      if:  always() && inputs.upload_artifacts 
