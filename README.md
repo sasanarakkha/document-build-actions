@@ -19,7 +19,7 @@ jobs:
     permissions:
       contents: write  # For uploading artifacts
     steps:
-      - uses: bergentroll/sasanarakkha-build-ebooks-action@v1
+      - uses: sasanarakkha/document-build-actions@v1
         with:
           validate_epub: false  # To disable corresponding step
           optimize_epub: false  # see inputs section of action.yml
