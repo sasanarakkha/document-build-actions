@@ -80,7 +80,10 @@ runs:
       if:  always() && FromJSON(inputs.build_azw3)
     - name: Normalize filenames
       run: |
-        for f in build/*; do mv "$f" "$(python3 -m unidecode -c "$f")"; done
+        for f in build/*; do
+          dst="$(python3 -m unidecode -c "$f")"
+          [[ "$f" != "$dst" ]] && mv "$f" "$dst"
+        done
         rename --verbose --filename 's/\\//g' build/*
         rename --verbose --filename 's/\s/_/g' build/*
       shell: bash
