@@ -74,8 +74,8 @@ runs:
       run: make validate
       shell: bash
       if:  always() && FromJSON(inputs.validate_epub)
-    - name: Optimize
-      run: make optimize EPUB
+    - name: Optimize EPUB
+      run: make optimize
       shell: bash
       if:  always() && FromJSON(inputs.optimize_epub)
     - name: Normalize filenames
