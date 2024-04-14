@@ -34,7 +34,7 @@ hub. Image usually built with a command like following (note to replace `TAG`):
 ```shell
 sudo docker image build --compress --force-rm . \
     --tag 'bergentroll/pali-english-recitations-builder:TAG' \
-    --tag 'bergentroll/pali-english-recitations-builder:latest' \
+    --tag 'bergentroll/pali-english-recitations-builder:latest'
 ```
 
 and uploaded with:

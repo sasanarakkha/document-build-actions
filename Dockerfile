@@ -1,7 +1,7 @@
 # Enough fresh TeXLive and enough old Emacs for org-tangle in Jammy
 FROM ubuntu:jammy
 LABEL name="Pāli-English Recitations build image"
-LABEL version="0.3"
+LABEL version="0.4"
 
 # hadolint ignore=DL3008
 RUN \
@@ -39,6 +39,7 @@ RUN \
 RUN \
   apt-get update && \
   apt-get install --no-install-recommends --yes \
+    latexmk \
     texlive \
     texlive-extra-utils \
     texlive-fonts-extra \
