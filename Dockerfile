@@ -2,6 +2,8 @@
 FROM ubuntu:jammy
 LABEL name="Pāli-English Recitations build image"
 LABEL version="0.4"
+# Increase just to trigger pipeline, reset on version update
+LABEL release="1"
 
 # hadolint ignore=DL3008
 RUN \
