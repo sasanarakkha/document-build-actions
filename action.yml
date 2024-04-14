@@ -98,7 +98,7 @@ runs:
         tag: ${{ steps.tag.outputs.release_tag }}
         name: ${{ steps.tag.outputs.release_name }}
         body: Automatically built documents
-        artifacts: "build/*"
+        artifacts: "build/*.pdf,build/*.epub,build/*.mobi,build/*.azw3"
         removeArtifacts: true
         artifactErrorsFailBuild: true
       if:  always() && FromJSON(inputs.upload_artifacts)
