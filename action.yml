@@ -62,14 +62,6 @@ runs:
       run: make epub
       shell: bash
       if:  always() && FromJSON(inputs.build_epub)
-    - name: Build Mobipocket
-      run: make mobi
-      shell: bash
-      if:  always() && FromJSON(inputs.build_mobi)
-    - name: Build AZW3
-      run: make azw3
-      shell: bash
-      if:  always() && FromJSON(inputs.build_azw3)
     - name: Validate EPUB
       run: make validate
       shell: bash
@@ -78,6 +70,14 @@ runs:
       run: make optimize
       shell: bash
       if:  always() && FromJSON(inputs.optimize_epub)
+    - name: Build Mobipocket
+      run: make mobi
+      shell: bash
+      if:  always() && FromJSON(inputs.build_mobi)
+    - name: Build AZW3
+      run: make azw3
+      shell: bash
+      if:  always() && FromJSON(inputs.build_azw3)
     - name: Normalize filenames
       run: |
         for f in build/*; do mv "$f" "$(python3 -m unidecode -c "$f")"; done
