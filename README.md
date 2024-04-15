@@ -15,7 +15,7 @@ Use it as a step in a workflow like:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: bergentroll/pali-english-recitations-builder:latest
+    container: ghcr.io/sasanarakkha/document-build-actions:main
     permissions:
       contents: write  # For uploading artifacts
     steps:
@@ -27,18 +27,18 @@ jobs:
 
 ## Image
 
-[Dockerfile](./Dockerfile) is used to maintain a GNU/Linux environment to build
-documents. The pipeline fetching a docker image from the https://hub.docker.com
-hub. Image usually built with a command like following (note to replace `TAG`):
+`[Dockerfile](./Dockerfile)` is used to maintain a GNU/Linux environment to build
+documents. An images is building with GitHub Actions on `Dockerfile` change and is awailable in 
+[packages](https://github.com/sasanarakkha/document-build-actions/pkgs/container/document-build-actions).
+
+To build an image locally for tests run:
 
 ```shell
-sudo docker image build --compress --force-rm . \
-    --tag 'bergentroll/pali-english-recitations-builder:TAG' \
-    --tag 'bergentroll/pali-english-recitations-builder:latest'
+sudo docker image build --compress --force-rm . --tag document-build-actions
 ```
 
-and uploaded with:
+Than to get shell and delete a container after exit:
 
 ```shell
-sudo docker push --all-tags bergentroll/pali-english-recitations-builder
+sudo docker run --interactive --tty --rm document-build-actions
 ```
